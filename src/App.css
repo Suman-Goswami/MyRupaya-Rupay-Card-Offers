@@ -1,38 +1,160 @@
-.App {
+/* Background and font styling */
+body {
+  background: linear-gradient(90deg, #ffde6b 0%, #f3f8f0 100%);
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.credit-card-offers-container {
+  text-align: center;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.heading{
+  font-size: 24px;
+  color: #333;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Title styling */
+.credit-card-offers-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Search input and dropdown styling */
+.dropdown {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  transition: background-color white 0.2s ease;
+}
+
+.credit-card-offers-search {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Filtered card list */
+.filtered-cards-list {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: white;
+  position: absolute;
+  z-index: 1000;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow-y: auto;
+}
+
+.filtered-card-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.filtered-card-item:hover {
+  background-color: #f1f1f1;
+}
+
+/* Card grid styling */
+.selected-card-offers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 50px;
+  padding: 20px 0;
+}
+
+/* Individual card styling */
+.offer-card {
+  background-color: #d2e4c7;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: left;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Image styling */
+.offer-card img {
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* Card information styling */
+.offer-details {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.offer-details strong {
+  font-weight: bold;
+}
+
+/* Button styling */
+.offer-link-button {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.offer-link-button:hover {
+  text-decoration: underline;
+}
+
+/* Alternative message styling */
+.alt {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Responsive grid styling */
+@media (min-width: 480px) {
+  /* Display 2 cards per row on small screens */
+  .selected-card-offers {
+      grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (min-width: 1024px) {
+  /* Display 3 cards per row on larger screens */
+  .selected-card-offers {
+      grid-template-columns: repeat(3, 1fr);
   }
-  to {
-    transform: rotate(360deg);
+  
+  .offer-card {
+      flex-direction: column;
+      text-align: center;
+  }
+  
+  .offer-card img {
+      margin: 0 auto 15px auto;
   }
 }
