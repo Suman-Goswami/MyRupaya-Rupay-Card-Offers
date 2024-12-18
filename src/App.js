@@ -471,7 +471,8 @@ const Image = [
                         borderRadius: '8px',
                         padding: '15px',
                         boxShadow: '0px 0px 8px rgba(0,0,0,0.1)',
-                        backgroundColor: '#D2E4C7',
+                        backgroundColor: '#39641D',
+                        color: 'white',
                         display: 'flex',            // Make card a flex container
                         flexDirection: 'column',     // Arrange items vertically
                         justifyContent: 'space-between' // Align content for equal spacing
