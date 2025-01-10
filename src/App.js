@@ -35,11 +35,13 @@ function CreditCardOffers() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredCards, setFilteredCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
+    const [noOffersFound, setNoOffersFound] = useState(false);
 
     const handleSelectCard = (card) => {
         setSelectedCard(card);
         setSearchTerm(card); // Set the selected card name in the input field
         setFilteredCards([]); // Remove the dropdown
+        setNoOffersFound(false); // Reset the "no offers" flag
     };
 
     const handleInputChange = (e) => {
@@ -50,11 +52,17 @@ function CreditCardOffers() {
             // Clear offers if the input field is cleared
             setSelectedCard(null);
             setFilteredCards([]);
+            setNoOffersFound(false);
         } else {
             const results = RupayCards.filter(card =>
                 card.toLowerCase().includes(value.toLowerCase())
             );
             setFilteredCards(results);
+            if (results.length === 0) {
+                setNoOffersFound(true); // Set the flag if no results are found
+            } else {
+                setNoOffersFound(false); // Reset the flag if results are found
+            }
         }
     };
 
@@ -76,7 +84,7 @@ function CreditCardOffers() {
                 }}
             />
 
-            {filteredCards.length > 0 && (
+            {filteredCards.length > 0 && !noOffersFound && (
                 <ul style={{
                     listStyleType: 'none',
                     padding: '0',
@@ -106,7 +114,13 @@ function CreditCardOffers() {
                 </ul>
             )}
 
-            {selectedCard && (
+            {noOffersFound && (
+                <p style={{ color: 'red', marginTop: '10px' }}>
+                    No offers found for this card.
+                </p>
+            )}
+
+            {selectedCard && !noOffersFound && (
                 <div style={{ marginTop: '20px' }}>
                     <h3>Offers for {selectedCard}</h3>
                     <div style={{
@@ -114,43 +128,47 @@ function CreditCardOffers() {
                         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                         gap: '20px',
                     }}>
-                        {Offers.map((offer, index) => (
-                            <div key={index} style={{
-                                border: '1px solid #ddd',
-                                borderRadius: '8px',
-                                padding: '15px',
-                                boxShadow: '0px 0px 8px rgba(0,0,0,0.1)',
-                                backgroundColor: '#39641D',
-                                color: 'white',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                            }}>
-                                {Image[index] ? (
-                                    <img src={Image[index]} alt={`Offer ${index + 1}`} style={{ width: '100%', marginBottom: '10px' }} />
-                                ) : (
-                                    <p>No image available</p>
-                                )}
-                                <p><strong>Offers:</strong> {Offers[index] || 'No offer available'}</p>
-                                <p><strong>Duration:</strong> {Date[index] || 'No duration available'}</p>
-                                <a
-                                    href={Link[index] || '#'}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{
-                                        marginTop: 'auto',
-                                        padding: '10px 15px',
-                                        backgroundColor: '#007bff',
-                                        color: '#fff',
-                                        textDecoration: 'none',
-                                        borderRadius: '5px',
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    View Offer Details
-                                </a>
-                            </div>
-                        ))}
+                        {Offers.length > 0 ? (
+                            Offers.map((offer, index) => (
+                                <div key={index} style={{
+                                    border: '1px solid #ddd',
+                                    borderRadius: '8px',
+                                    padding: '15px',
+                                    boxShadow: '0px 0px 8px rgba(0,0,0,0.1)',
+                                    backgroundColor: '#39641D',
+                                    color: 'white',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                }}>
+                                    {Image[index] ? (
+                                        <img src={Image[index]} alt={`Offer ${index + 1}`} style={{ width: '100%', marginBottom: '10px' }} />
+                                    ) : (
+                                        <p>No image available</p>
+                                    )}
+                                    <p><strong>Offers:</strong> {Offers[index] || 'No offer available'}</p>
+                                    <p><strong>Duration:</strong> {Date[index] || 'No duration available'}</p>
+                                    <a
+                                        href={Link[index] || '#'}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            marginTop: 'auto',
+                                            padding: '10px 15px',
+                                            backgroundColor: '#007bff',
+                                            color: '#fff',
+                                            textDecoration: 'none',
+                                            borderRadius: '5px',
+                                            textAlign: 'center',
+                                        }}
+                                    >
+                                        View Offer Details
+                                    </a>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No offers available for this card.</p>
+                        )}
                     </div>
                 </div>
             )}
