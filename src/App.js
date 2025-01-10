@@ -38,12 +38,18 @@ function CreditCardOffers() {
 
     const handleSelectCard = (card) => {
         setSelectedCard(card);
-        setSearchTerm(card); // Keep the selected card name in the input field
+        setSearchTerm(card); // Set the selected card name in the input field
     };
 
     const handleInputChange = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
+
+        if (value.trim() === '') {
+            // Clear offers if the input field is cleared
+            setSelectedCard(null);
+        }
+
         const results = RupayCards.filter(card =>
             card.toLowerCase().includes(value.toLowerCase())
         );
