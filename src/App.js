@@ -115,7 +115,7 @@ function CreditCardOffers() {
             )}
 
             {noOffersFound && (
-                <p style={{ color: 'red', marginTop: '10px' }}>
+                <p style={{ color: 'red', marginTop: '10px' , textAlign: 'center'}}>
                     No offers found for this card.
                 </p>
             )}
