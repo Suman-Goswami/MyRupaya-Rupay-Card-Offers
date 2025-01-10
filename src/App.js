@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 const RupayCards = [
@@ -33,41 +33,38 @@ const Date = [
 
 function CreditCardOffers() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [filteredCards, setFilteredCards] = useState([]);
+    const [filteredCards, setFilteredCards] = useState(RupayCards);
     const [selectedCard, setSelectedCard] = useState(null);
 
     const handleSelectCard = (card) => {
         setSelectedCard(card);
-        setSearchTerm('');
+        setSearchTerm(card); // Keep the selected card name in the input field
     };
 
-    useEffect(() => {
-        if (searchTerm === '') {
-            setFilteredCards([]);
-            setSelectedCard(null);
-        } else {
-            const results = RupayCards.filter(card =>
-                card.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            setFilteredCards(results);
-        }
-    }, [searchTerm]);
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        const results = RupayCards.filter(card =>
+            card.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredCards(results);
+    };
 
     return (
         <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
-            <h2 className='heading'>Rupay Card Offers</h2>
+            <h2 className="heading">Rupay Card Offers</h2>
             <input
                 type="text"
                 placeholder="Enter card name..."
                 value={searchTerm}
                 className="dropdown"
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={handleInputChange}
                 style={{
                     width: '100%',
                     padding: '10px',
                     borderRadius: '5px',
                     border: '1px solid #ddd',
-                    fontSize: '16px'
+                    fontSize: '16px',
                 }}
             />
 
@@ -82,7 +79,7 @@ function CreditCardOffers() {
                     boxShadow: '0px 0px 5px rgba(0,0,0,0.1)',
                     backgroundColor: '#fff',
                     position: 'absolute',
-                    zIndex: '1000'
+                    zIndex: '1000',
                 }}>
                     {filteredCards.map(card => (
                         <li
@@ -101,19 +98,13 @@ function CreditCardOffers() {
                 </ul>
             )}
 
-            {!selectedCard && searchTerm && filteredCards.length === 0 && (
-                <p style={{ marginTop: '10px', color: 'red' }}>
-                    No offers found for the entered card name.
-                </p>
-            )}
-
             {selectedCard && (
                 <div style={{ marginTop: '20px' }}>
                     <h3>Offers for {selectedCard}</h3>
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                        gap: '20px',
+                        gap: '80px',
                     }}>
                         {Offers.map((offer, index) => (
                             <div key={index} style={{
@@ -125,7 +116,7 @@ function CreditCardOffers() {
                                 color: 'white',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                justifyContent: 'space-between'
+                                justifyContent: 'space-between',
                             }}>
                                 {Image[index] ? (
                                     <img src={Image[index]} alt={`Offer ${index + 1}`} style={{ width: '100%', marginBottom: '10px' }} />
@@ -145,7 +136,7 @@ function CreditCardOffers() {
                                         color: '#fff',
                                         textDecoration: 'none',
                                         borderRadius: '5px',
-                                        textAlign: 'center'
+                                        textAlign: 'center',
                                     }}
                                 >
                                     View Offer Details
