@@ -394,7 +394,7 @@ const Image = [
   ];
 
 
-function CreditCardOffers() {
+  function CreditCardOffers() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredCards, setFilteredCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
@@ -430,31 +430,27 @@ function CreditCardOffers() {
     };
 
     return (
-        <div style={{ padding: '20px', margin: 'auto' }}>
-    {/* Navbar Component */}
-      <nav style={styles.navbar}>
-  <div style={styles.logoContainer}>
-    <a href="https://www.myrupaya.in/">
-      <img
-        src="https://static.wixstatic.com/media/f836e8_26da4bf726c3475eabd6578d7546c3b2~mv2.jpg/v1/crop/x_124,y_0,w_3152,h_1458/fill/w_909,h_420,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dark_logo_white_background.jpg"
-        alt="MyRupaya Logo"
-        style={styles.logo}
-      />
-    </a>
-    {/* Move the links here */}
-    <div
-      style={{
-        ...styles.linksContainer,
-        ...(isMobileMenuOpen ? styles.mobileMenuOpen : {}),
-      }}
-    >
-      <a href="https://www.myrupaya.in/" style={styles.link}>
-        Home
-      </a>
-    </div>
-  </div>
-</nav>
+        <div style={{ padding: '20px', margin: 'auto', position: 'relative' }}>
+            {/* Navbar Component */}
+            <nav style={styles.navbar}>
+                <div style={styles.logoContainer}>
+                    <a href="https://www.myrupaya.in/">
+                        <img
+                            src="https://static.wixstatic.com/media/f836e8_26da4bf726c3475eabd6578d7546c3b2~mv2.jpg/v1/crop/x_124,y_0,w_3152,h_1458/fill/w_909,h_420,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dark_logo_white_background.jpg"
+                            alt="MyRupaya Logo"
+                            style={styles.logo}
+                        />
+                    </a>
+                    {/* Move the links here */}
+                    <div style={styles.linksContainer}>
+                        <a href="https://www.myrupaya.in/" style={styles.link}>
+                            Home
+                        </a>
+                    </div>
+                </div>
+            </nav>
             <h2 className="heading">Rupay Card Offers</h2>
+       
             <input
                 type="text"
                 placeholder="Enter card name..."
@@ -462,26 +458,22 @@ function CreditCardOffers() {
                 className="dropdown"
                 onChange={handleInputChange}
                 style={{
-                    width: '100%',
-                    padding: '10px',
-                    borderRadius: '5px',
-                    border: '1px solid #ddd',
-                    fontSize: '16px',
+                  width: '100%', padding: '8px', borderRadius: '5px' 
+                    
                 }}
-            />
+            /> 
 
             {filteredCards.length > 0 && !noOffersFound && (
                 <ul style={{
-                    listStyleType: 'none',
-                    padding: '0',
-                    margin: '10px 0 0 0',
-                    width: '1000px',
+                  
+                    marginTop: '10px',
+                    backgroundColor: '#f9f9f9',
                     border: '1px solid #ddd',
                     borderRadius: '5px',
-                    boxShadow: '0px 0px 5px rgba(0,0,0,0.1)',
-                    backgroundColor: '#fff',
-                    position: 'absolute',
-                    zIndex: '1000',
+                    maxHeight: '150px',
+                    overflowY: 'auto',
+              
+                    
                 }}>
                     {filteredCards.map(card => (
                         <li
@@ -501,7 +493,7 @@ function CreditCardOffers() {
             )}
 
             {noOffersFound && (
-                <p style={{ color: 'red', marginTop: '10px' , textAlign: 'center'}}>
+                <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
                     No offers found for this card.
                 </p>
             )}
@@ -527,7 +519,7 @@ function CreditCardOffers() {
                                     flexDirection: 'column',
                                     justifyContent: 'space-between',
                                 }}>
-                                    {Image[index] ? (
+                                   {Image[index] ? (
                                         <img src={Image[index]} alt={`Offer ${index + 1}`} style={{ width: '100%', marginBottom: '10px' }} />
                                     ) : (
                                         <p>No image available</p>
@@ -561,6 +553,7 @@ function CreditCardOffers() {
         </div>
     );
 }
+
 const styles = {
     navbar: {
       display: "flex",
