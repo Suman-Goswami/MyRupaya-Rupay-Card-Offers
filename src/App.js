@@ -430,7 +430,7 @@ function CreditCardOffers() {
     };
 
     return (
-        <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
+        <div style={{ padding: '20px', margin: 'auto' }}>
     {/* Navbar Component */}
       <nav style={styles.navbar}>
   <div style={styles.logoContainer}>
