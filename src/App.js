@@ -431,6 +431,29 @@ function CreditCardOffers() {
 
     return (
         <div style={{ padding: '20px', maxWidth: '1000px', margin: 'auto' }}>
+    {/* Navbar Component */}
+      <nav style={styles.navbar}>
+  <div style={styles.logoContainer}>
+    <a href="https://www.myrupaya.in/">
+      <img
+        src="https://static.wixstatic.com/media/f836e8_26da4bf726c3475eabd6578d7546c3b2~mv2.jpg/v1/crop/x_124,y_0,w_3152,h_1458/fill/w_909,h_420,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dark_logo_white_background.jpg"
+        alt="MyRupaya Logo"
+        style={styles.logo}
+      />
+    </a>
+    {/* Move the links here */}
+    <div
+      style={{
+        ...styles.linksContainer,
+        ...(isMobileMenuOpen ? styles.mobileMenuOpen : {}),
+      }}
+    >
+      <a href="https://www.myrupaya.in/" style={styles.link}>
+        Home
+      </a>
+    </div>
+  </div>
+</nav>
             <h2 className="heading">Rupay Card Offers</h2>
             <input
                 type="text"
@@ -538,5 +561,39 @@ function CreditCardOffers() {
         </div>
     );
 }
+const styles = {
+    navbar: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "10px 20px",
+      backgroundColor: "#CDD1C1",
+    },
+    logoContainer: {
+      display: "flex",
+      alignItems: "center",
+    },
+    logo: {
+      width: "100px",
+      height: "100px",
+      marginRight: "20px",
+    },
+    linksContainer: {
+      display: "flex",
+      gap: "35px",
+      flexWrap: "wrap",
+      marginLeft: "40px", // Adjust spacing from the logo
+    },
+    link: {
+      textDecoration: "none",
+      color: "black",
+      fontSize: "18px", // Increased font size
+      fontFamily: "Arial, sans-serif",
+      transition: "color 0.3s ease", // Smooth transition effect
+    },
+    mobileMenuOpen: {
+      display: "block",
+    },
+  };
 
 export default CreditCardOffers;
