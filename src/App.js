@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 const RupayCards = [
@@ -393,40 +393,11 @@ const Image = [
     "29th July 2024 to 31st July 2025"
   ];
 
-
 function CreditCardOffers() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
     const [filteredCards, setFilteredCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
     const [noOffersFound, setNoOffersFound] = useState(false);
-
-    // Debounce search input (300ms delay)
-    useEffect(() => {
-        const timerId = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm);
-        }, 300);
-        return () => clearTimeout(timerId);
-    }, [searchTerm]);
-
-    // Filter cards based on search terms
-    useEffect(() => {
-        if (debouncedSearchTerm.trim() === '') {
-            setFilteredCards([]);
-            setNoOffersFound(false);
-            return;
-        }
-
-        const searchTerms = debouncedSearchTerm.toLowerCase().split(' ');
-        
-        const results = RupayCards.filter(card => {
-            const cardLower = card.toLowerCase();
-            return searchTerms.every(term => cardLower.includes(term));
-        });
-
-        setFilteredCards(results);
-        setNoOffersFound(results.length === 0);
-    }, [debouncedSearchTerm]);
 
     const handleSelectCard = (card) => {
         setSelectedCard(card);
@@ -438,7 +409,24 @@ function CreditCardOffers() {
     const handleInputChange = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        setSelectedCard(null);
+
+        if (value.trim() === '') {
+            setSelectedCard(null);
+            setFilteredCards([]);
+            setNoOffersFound(false);
+        } else {
+            // Split search term into individual words
+            const searchWords = value.toLowerCase().split(/\s+/).filter(word => word.length > 0);
+            
+            const results = RupayCards.filter(card => {
+                const cardLower = card.toLowerCase();
+                // Check if all search words appear in the card name (in any order)
+                return searchWords.every(word => cardLower.includes(word));
+            });
+            
+            setFilteredCards(results);
+            setNoOffersFound(results.length === 0);
+        }
     };
 
     return (
@@ -453,7 +441,6 @@ function CreditCardOffers() {
                             style={styles.logo}
                         />
                     </a>
-                    {/* Move the links here */}
                     <div style={styles.linksContainer}>
                         <a href="https://www.myrupaya.in/" style={styles.link}>
                             Home
@@ -470,22 +457,23 @@ function CreditCardOffers() {
                 className="dropdown"
                 onChange={handleInputChange}
                 style={{
-                  width: '100%', padding: '8px', borderRadius: '5px' 
-                    
+                    width: '100%', 
+                    padding: '8px', 
+                    borderRadius: '5px',
+                    marginBottom: '10px'
                 }}
             /> 
 
             {filteredCards.length > 0 && !noOffersFound && (
                 <ul style={{
-                  
-                    marginTop: '10px',
+                    marginTop: '0',
                     backgroundColor: '#f9f9f9',
                     border: '1px solid #ddd',
                     borderRadius: '5px',
                     maxHeight: '150px',
                     overflowY: 'auto',
-              
-                    
+                    padding: '0',
+                    listStyle: 'none'
                 }}>
                     {filteredCards.map(card => (
                         <li
@@ -495,7 +483,9 @@ function CreditCardOffers() {
                                 padding: '8px',
                                 cursor: 'pointer',
                                 borderBottom: '1px solid #ddd',
-                                backgroundColor: '#f9f9f9',
+                                ':hover': {
+                                    backgroundColor: '#e9e9e9'
+                                }
                             }}
                         >
                             {card}
@@ -506,7 +496,7 @@ function CreditCardOffers() {
 
             {noOffersFound && (
                 <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
-                    No offers found for this card.
+                    No matching cards found. Please try a different search term.
                 </p>
             )}
 
@@ -602,6 +592,13 @@ const styles = {
   };
 
 export default CreditCardOffers;
+
+
+
+
+
+
+
 
 
 
