@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const RupayCards = [
@@ -394,39 +394,51 @@ const Image = [
   ];
 
 
-  function CreditCardOffers() {
+function CreditCardOffers() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
     const [filteredCards, setFilteredCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
     const [noOffersFound, setNoOffersFound] = useState(false);
 
+    // Debounce search input (300ms delay)
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+        }, 300);
+        return () => clearTimeout(timerId);
+    }, [searchTerm]);
+
+    // Filter cards based on search terms
+    useEffect(() => {
+        if (debouncedSearchTerm.trim() === '') {
+            setFilteredCards([]);
+            setNoOffersFound(false);
+            return;
+        }
+
+        const searchTerms = debouncedSearchTerm.toLowerCase().split(' ');
+        
+        const results = RupayCards.filter(card => {
+            const cardLower = card.toLowerCase();
+            return searchTerms.every(term => cardLower.includes(term));
+        });
+
+        setFilteredCards(results);
+        setNoOffersFound(results.length === 0);
+    }, [debouncedSearchTerm]);
+
     const handleSelectCard = (card) => {
         setSelectedCard(card);
-        setSearchTerm(card); // Set the selected card name in the input field
-        setFilteredCards([]); // Remove the dropdown
-        setNoOffersFound(false); // Reset the "no offers" flag
+        setSearchTerm(card);
+        setFilteredCards([]);
+        setNoOffersFound(false);
     };
 
     const handleInputChange = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-
-        if (value.trim() === '') {
-            // Clear offers if the input field is cleared
-            setSelectedCard(null);
-            setFilteredCards([]);
-            setNoOffersFound(false);
-        } else {
-            const results = RupayCards.filter(card =>
-                card.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredCards(results);
-            if (results.length === 0) {
-                setNoOffersFound(true); // Set the flag if no results are found
-            } else {
-                setNoOffersFound(false); // Reset the flag if results are found
-            }
-        }
+        setSelectedCard(null);
     };
 
     return (
@@ -590,3 +602,13 @@ const styles = {
   };
 
 export default CreditCardOffers;
+
+
+
+
+
+
+
+
+
+
